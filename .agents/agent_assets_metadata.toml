@@ -1,0 +1,103 @@
+uploads = []
+
+[[generated]]
+id = "V0sn4Z6c2gYJIUhuKUP2p"
+uri = "file://attached_assets/seed/product_1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "jHr3gk1csk7M6LQL9kAqA"
+uri = "file://attached_assets/seed/product_2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "3SlxN4w3jeaNYBJ5i7Kpv"
+uri = "file://attached_assets/seed/product_3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "y3FptMhK-Z4SIhv6lEeVX"
+uri = "file://attached_assets/seed/product_4.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "fg7oTK3x0H22h5qQMb3Tt"
+uri = "file://attached_assets/seed/product_5.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "n3dBaNaHUp7aDGqdg4OWd"
+uri = "file://attached_assets/seed/product_6.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "yfvghddeQrsK8yTfNKOK7"
+uri = "file://attached_assets/seed/product_7.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "CDzdeRdEFFIYuodicMb6x"
+uri = "file://attached_assets/seed/product_8.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "lc4iLMXSO_m0x13X9CT2p"
+uri = "file://attached_assets/seed/product_9.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "BIL2QS6cgAsMJspP5OoLo"
+uri = "file://attached_assets/seed/product_10.png"
+type = "image"
+title = "generated_image"
+
+[[outputs]]
+id = "4b1RhltOp09vcQ2F1Vu7i"
+uri = "file://attached_assets/stock_images/leather_leash.jpg"
+type = "image"
+title = "premium tan brown leather dog leash on light beige neutral background, product photography"
+
+[[outputs]]
+id = "bkE4smxhvTBngtG-ePQIh"
+uri = "file://attached_assets/stock_images/cat_tower.jpg"
+type = "image"
+title = "modern beige cat tower tree with sisal posts isolated on cream background, product photography"
+
+[[outputs]]
+id = "8slx_gFQuDvTg7ApJ5kZB"
+uri = "file://attached_assets/stock_images/dog_bone_toy.jpg"
+type = "image"
+title = "plush squeaky bone shaped dog toy on neutral background, product photography"
+
+[[outputs]]
+id = "xa-jsfLKKEk-7FpRDzFmR"
+uri = "file://attached_assets/stock_images/cat_wand.jpg"
+type = "image"
+title = "wooden cat feather wand toy on neutral cream background, product photography"
+
+[[outputs]]
+id = "WeDoPFMf8g2vuFg6rbHsY"
+uri = "file://attached_assets/stock_images/dog_shampoo.jpg"
+type = "image"
+title = "amber glass bottle of dog grooming shampoo on neutral cream background, product photography"
+
+[[outputs]]
+id = "sJM1Od0ieDPu8dAjP5iXl"
+uri = "file://attached_assets/stock_images/slicker_brush.jpg"
+type = "image"
+title = "pet grooming slicker brush with wooden handle on neutral background, product photography"
+
+[[outputs]]
+id = "8fizyMVwsSFwI_kKV6Fq1"
+uri = "file://attached_assets/stock_images/stock_image.jpg"
+type = "image"
+title = "happy golden retriever dog lying on cream blanket warm soft natural light minimal lifestyle"

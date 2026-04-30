@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "PawSmart - AI Pet Care & Store"
+version = "1.0.0"
+id = "artifacts/pawsmart"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23140
+
+[services.development]
+run = "pnpm --filter @workspace/pawsmart run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pawsmart", "run", "build" ]
+publicDir = "artifacts/pawsmart/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23140"
+BASE_PATH = "/"

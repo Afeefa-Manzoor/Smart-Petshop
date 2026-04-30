@@ -3,20 +3,24 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: PawSmart API — AI Pet Care + E-Commerce
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: products
+  - name: pets
+  - name: cart
+  - name: orders
+  - name: ai
+  - name: admin
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +28,743 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /products:
+    get:
+      operationId: listProducts
+      tags: [products]
+      summary: List products with filters
+      parameters:
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: petType
+          schema: { type: string }
+        - in: query
+          name: brand
+          schema: { type: string }
+        - in: query
+          name: search
+          schema: { type: string }
+        - in: query
+          name: sort
+          schema: { type: string, enum: [popular, price_asc, price_desc, newest] }
+      responses:
+        "200":
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Product" }
+  /products/featured:
+    get:
+      operationId: listFeaturedProducts
+      tags: [products]
+      summary: Featured products for homepage hero strip
+      responses:
+        "200":
+          description: Featured products
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Product" }
+  /products/popular-in-pakistan:
+    get:
+      operationId: listPopularInPakistan
+      tags: [products]
+      summary: Popular in Pakistan
+      responses:
+        "200":
+          description: Popular products
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Product" }
+  /products/categories:
+    get:
+      operationId: listCategories
+      tags: [products]
+      summary: Available product categories with counts
+      responses:
+        "200":
+          description: Categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/CategorySummary" }
+  /products/brands:
+    get:
+      operationId: listBrands
+      tags: [products]
+      summary: Brand list with counts
+      responses:
+        "200":
+          description: Brands
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/BrandSummary" }
+  /products/{id}:
+    get:
+      operationId: getProduct
+      tags: [products]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Single product
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Product" }
+
+  /pets:
+    get:
+      operationId: listPets
+      tags: [pets]
+      summary: Get the current user's pet profiles
+      responses:
+        "200":
+          description: Pets
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Pet" }
+    post:
+      operationId: createPet
+      tags: [pets]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PetInput" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Pet" }
+  /pets/{id}:
+    put:
+      operationId: updatePet
+      tags: [pets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PetInput" }
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Pet" }
+    delete:
+      operationId: deletePet
+      tags: [pets]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204": { description: Deleted }
+
+  /cart:
+    get:
+      operationId: getCart
+      tags: [cart]
+      responses:
+        "200":
+          description: Cart
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Cart" }
+  /cart/items:
+    post:
+      operationId: addCartItem
+      tags: [cart]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AddCartItemInput" }
+      responses:
+        "200":
+          description: Updated cart
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Cart" }
+  /cart/items/{productId}:
+    put:
+      operationId: updateCartItem
+      tags: [cart]
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UpdateCartItemInput" }
+      responses:
+        "200":
+          description: Updated cart
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Cart" }
+    delete:
+      operationId: removeCartItem
+      tags: [cart]
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Updated cart
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Cart" }
+
+  /orders:
+    get:
+      operationId: listOrders
+      tags: [orders]
+      summary: Current user's orders
+      responses:
+        "200":
+          description: Orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Order" }
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Checkout - convert cart to order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/CreateOrderInput" }
+      responses:
+        "201":
+          description: Order created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Order" }
+  /orders/{id}:
+    get:
+      operationId: getOrder
+      tags: [orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Order
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Order" }
+
+  /ai/recommend:
+    post:
+      operationId: aiRecommend
+      tags: [ai]
+      summary: Get product recommendations for a pet profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AiRecommendInput" }
+      responses:
+        "200":
+          description: Recommendations
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AiRecommendResult" }
+  /ai/symptom-check:
+    post:
+      operationId: aiSymptomCheck
+      tags: [ai]
+      summary: Symptom checker (with safety disclaimer)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SymptomCheckInput" }
+      responses:
+        "200":
+          description: Symptom analysis
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SymptomCheckResult" }
+  /ai/breed-detect:
+    post:
+      operationId: aiBreedDetect
+      tags: [ai]
+      summary: Pet image breed detector (mock identification)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/BreedDetectInput" }
+      responses:
+        "200":
+          description: Breed detection result
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BreedDetectResult" }
+
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Admin dashboard statistics
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AdminStats" }
+  /admin/recent-activity:
+    get:
+      operationId: getAdminRecentActivity
+      tags: [admin]
+      summary: Recent orders + new users feed
+      responses:
+        "200":
+          description: Activity
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ActivityItem" }
+  /admin/products:
+    get:
+      operationId: adminListProducts
+      tags: [admin]
+      responses:
+        "200":
+          description: All products
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Product" }
+    post:
+      operationId: adminCreateProduct
+      tags: [admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProductInput" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Product" }
+  /admin/products/{id}:
+    put:
+      operationId: adminUpdateProduct
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProductInput" }
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Product" }
+    delete:
+      operationId: adminDeleteProduct
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204": { description: Deleted }
+  /admin/orders:
+    get:
+      operationId: adminListOrders
+      tags: [admin]
+      responses:
+        "200":
+          description: All orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Order" }
+  /admin/orders/{id}/status:
+    put:
+      operationId: adminUpdateOrderStatus
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UpdateOrderStatusInput" }
+      responses:
+        "200":
+          description: Updated order
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Order" }
+  /admin/users:
+    get:
+      operationId: adminListUsers
+      tags: [admin]
+      responses:
+        "200":
+          description: Users
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/AdminUser" }
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
-        status:
-          type: string
-      required:
-        - status
+        status: { type: string }
 
+    Product:
+      type: object
+      required: [id, name, brand, category, petType, price, stock, description, image, weight, expiryDate, popular, createdAt]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        brand: { type: string }
+        category: { type: string, description: "food | treats | accessories | grooming | toys" }
+        petType: { type: string, description: "dog | cat | small_pet" }
+        price: { type: number }
+        stock: { type: integer }
+        description: { type: string }
+        image: { type: string }
+        weight: { type: string, description: "e.g. 1kg, 5kg, 250g" }
+        expiryDate: { type: string }
+        popular: { type: boolean }
+        breed:
+          type: string
+          nullable: true
+        ageGroup:
+          type: string
+          nullable: true
+          description: "puppy | adult | senior | kitten | all"
+        healthCondition:
+          type: string
+          nullable: true
+        createdAt: { type: string }
+
+    ProductInput:
+      type: object
+      required: [name, brand, category, petType, price, stock, description, image, weight, expiryDate]
+      properties:
+        name: { type: string }
+        brand: { type: string }
+        category: { type: string }
+        petType: { type: string }
+        price: { type: number }
+        stock: { type: integer }
+        description: { type: string }
+        image: { type: string }
+        weight: { type: string }
+        expiryDate: { type: string }
+        popular: { type: boolean }
+        breed:
+          type: string
+          nullable: true
+        ageGroup:
+          type: string
+          nullable: true
+        healthCondition:
+          type: string
+          nullable: true
+
+    CategorySummary:
+      type: object
+      required: [category, count]
+      properties:
+        category: { type: string }
+        count: { type: integer }
+
+    BrandSummary:
+      type: object
+      required: [brand, count]
+      properties:
+        brand: { type: string }
+        count: { type: integer }
+
+    Pet:
+      type: object
+      required: [id, name, type, breed, ageYears, weightKg, healthNotes, createdAt]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        type: { type: string, description: "dog | cat" }
+        breed: { type: string }
+        ageYears: { type: number }
+        weightKg: { type: number }
+        healthNotes: { type: string }
+        createdAt: { type: string }
+
+    PetInput:
+      type: object
+      required: [name, type, breed, ageYears, weightKg]
+      properties:
+        name: { type: string }
+        type: { type: string }
+        breed: { type: string }
+        ageYears: { type: number }
+        weightKg: { type: number }
+        healthNotes: { type: string }
+
+    CartItem:
+      type: object
+      required: [productId, quantity, product]
+      properties:
+        productId: { type: integer }
+        quantity: { type: integer }
+        product: { $ref: "#/components/schemas/Product" }
+
+    Cart:
+      type: object
+      required: [items, subtotal, shipping, total, count]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/CartItem" }
+        subtotal: { type: number }
+        shipping: { type: number }
+        total: { type: number }
+        count: { type: integer }
+
+    AddCartItemInput:
+      type: object
+      required: [productId, quantity]
+      properties:
+        productId: { type: integer }
+        quantity: { type: integer, minimum: 1 }
+
+    UpdateCartItemInput:
+      type: object
+      required: [quantity]
+      properties:
+        quantity: { type: integer, minimum: 0 }
+
+    BreedDetectInput:
+      type: object
+      required: [imageUrl, petType]
+      properties:
+        imageUrl: { type: string }
+        petType: { type: string, enum: [dog, cat] }
+
+    UpdateOrderStatusInput:
+      type: object
+      required: [status]
+      properties:
+        status: { type: string, enum: [pending, shipped, delivered, cancelled] }
+
+    OrderItem:
+      type: object
+      required: [productId, name, brand, image, price, quantity]
+      properties:
+        productId: { type: integer }
+        name: { type: string }
+        brand: { type: string }
+        image: { type: string }
+        price: { type: number }
+        quantity: { type: integer }
+
+    Order:
+      type: object
+      required: [id, items, subtotal, shipping, total, status, customerName, address, phone, createdAt]
+      properties:
+        id: { type: integer }
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/OrderItem" }
+        subtotal: { type: number }
+        shipping: { type: number }
+        total: { type: number }
+        status: { type: string, enum: [pending, shipped, delivered, cancelled] }
+        customerName: { type: string }
+        address: { type: string }
+        phone: { type: string }
+        createdAt: { type: string }
+
+    CreateOrderInput:
+      type: object
+      required: [customerName, address, phone]
+      properties:
+        customerName: { type: string }
+        address: { type: string }
+        phone: { type: string }
+        notes: { type: string }
+
+    AiRecommendInput:
+      type: object
+      required: [petType]
+      properties:
+        petType: { type: string }
+        breed: { type: string }
+        ageYears: { type: number }
+        weightKg: { type: number }
+        healthCondition: { type: string }
+
+    AiRecommendResult:
+      type: object
+      required: [summary, products, careTips]
+      properties:
+        summary: { type: string }
+        products:
+          type: array
+          items: { $ref: "#/components/schemas/Product" }
+        careTips:
+          type: array
+          items: { type: string }
+
+    SymptomCheckInput:
+      type: object
+      required: [petType, symptoms]
+      properties:
+        petType: { type: string }
+        breed: { type: string }
+        symptoms: { type: string }
+
+    PossibleCause:
+      type: object
+      required: [name, severity, description]
+      properties:
+        name: { type: string }
+        severity: { type: string, enum: [mild, moderate, severe] }
+        description: { type: string }
+
+    SymptomCheckResult:
+      type: object
+      required: [disclaimer, possibleCauses, suggestedActions, urgent]
+      properties:
+        disclaimer: { type: string }
+        possibleCauses:
+          type: array
+          items: { $ref: "#/components/schemas/PossibleCause" }
+        suggestedActions:
+          type: array
+          items: { type: string }
+        urgent: { type: boolean }
+
+    BreedDetectResult:
+      type: object
+      required: [breed, confidence, characteristics, recommendedProducts, careTips, disclaimer]
+      properties:
+        breed: { type: string }
+        confidence: { type: number }
+        characteristics:
+          type: array
+          items: { type: string }
+        recommendedProducts:
+          type: array
+          items: { $ref: "#/components/schemas/Product" }
+        careTips:
+          type: array
+          items: { type: string }
+        disclaimer: { type: string }
+
+    AdminStats:
+      type: object
+      required: [totalRevenue, totalOrders, totalProducts, totalUsers, lowStockCount, ordersByStatus, revenueByDay, topProducts]
+      properties:
+        totalRevenue: { type: number }
+        totalOrders: { type: integer }
+        totalProducts: { type: integer }
+        totalUsers: { type: integer }
+        lowStockCount: { type: integer }
+        ordersByStatus:
+          type: array
+          items:
+            type: object
+            required: [status, count]
+            properties:
+              status: { type: string }
+              count: { type: integer }
+        revenueByDay:
+          type: array
+          items:
+            type: object
+            required: [date, revenue]
+            properties:
+              date: { type: string }
+              revenue: { type: number }
+        topProducts:
+          type: array
+          items:
+            type: object
+            required: [productId, name, totalSold, revenue]
+            properties:
+              productId: { type: integer }
+              name: { type: string }
+              totalSold: { type: integer }
+              revenue: { type: number }
+
+    ActivityItem:
+      type: object
+      required: [type, title, subtitle, createdAt]
+      properties:
+        type: { type: string, enum: [order, user, product] }
+        title: { type: string }
+        subtitle: { type: string }
+        createdAt: { type: string }
+
+    AdminUser:
+      type: object
+      required: [id, name, email, role, blocked, createdAt, orderCount]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        email: { type: string }
+        role: { type: string, enum: [user, admin, vendor] }
+        blocked: { type: boolean }
+        createdAt: { type: string }
+        orderCount: { type: integer }
