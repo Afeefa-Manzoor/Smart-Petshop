@@ -60,6 +60,54 @@ uri = "file://attached_assets/seed/product_10.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "qVZbKw5Tce_MYslIUtpzi"
+uri = "file://artifacts/pawsmart/public/seed/hero_cat.png"
+type = "image"
+title = "white persian cat hero"
+
+[[generated]]
+id = "_lei4BvBuLZfxBTRaatC0"
+uri = "file://artifacts/pawsmart/public/seed/product_p15.png"
+type = "image"
+title = "dog oatmeal shampoo"
+
+[[generated]]
+id = "4GLiyEhu9gf0yyKjpnrQF"
+uri = "file://artifacts/pawsmart/public/seed/product_p16.png"
+type = "image"
+title = "pet slicker brush"
+
+[[generated]]
+id = "R59yXrhOh_2qMmWwkdwxL"
+uri = "file://artifacts/pawsmart/public/seed/product_17.png"
+type = "image"
+title = "dog nail clipper"
+
+[[generated]]
+id = "2OxF2MoQ3agDY2Ej2nlEB"
+uri = "file://artifacts/pawsmart/public/seed/product_18.png"
+type = "image"
+title = "pet ear cleaner"
+
+[[generated]]
+id = "EcmOjY5FoofndKs65Llgu"
+uri = "file://artifacts/pawsmart/public/seed/product_19.png"
+type = "image"
+title = "pet grooming glove"
+
+[[generated]]
+id = "QPqpbv4QcuRCXXtOMH9aS"
+uri = "file://artifacts/pawsmart/public/seed/product_20.png"
+type = "image"
+title = "dog harness"
+
+[[generated]]
+id = "5GG7hGDd0_Rczs4ZFzSU8"
+uri = "file://artifacts/pawsmart/public/seed/product_21.png"
+type = "image"
+title = "orthopedic pet bed"
+
 [[outputs]]
 id = "4b1RhltOp09vcQ2F1Vu7i"
 uri = "file://attached_assets/stock_images/leather_leash.jpg"
@@ -100,4 +148,4 @@ title = "pet grooming slicker brush with wooden handle on neutral background, pr
 id = "8fizyMVwsSFwI_kKV6Fq1"
 uri = "file://attached_assets/stock_images/stock_image.jpg"
 type = "image"
-title = "happy golden retriever dog lying on cream blanket warm soft natural light minimal lifestyle"
+title = "dog training treat bag pouch belt clip portable kibble holder product photo"
