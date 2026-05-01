@@ -8,11 +8,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 
 export default function Shop() {
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<string>("");
-  const [petType, setPetType] = useState<string>("");
-  const [brand, setBrand] = useState<string>("");
-  const [sort, setSort] = useState<string>("popular");
+  // Initialise from URL search params (e.g. /shop?category=grooming)
+  const params = new URLSearchParams(window.location.search);
+  const [search, setSearch] = useState(params.get("search") || "");
+  const [category, setCategory] = useState<string>(params.get("category") || "");
+  const [petType, setPetType] = useState<string>(params.get("petType") || "");
+  const [brand, setBrand] = useState<string>(params.get("brand") || "");
+  const [sort, setSort] = useState<string>(params.get("sort") || "popular");
 
   const { data: products, isLoading } = useListProducts({
     search: search || undefined,
