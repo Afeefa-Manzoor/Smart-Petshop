@@ -30,4 +30,4 @@ COPY --from=build-backend /app/artifacts/api-server/dist ./dist
 COPY --from=build-frontend /app/artifacts/pawsmart/dist/public ./pawsmart-dist
 ENV NODE_ENV=production
 EXPOSE 8080
-CMD ["node", "--enable-source-maps", "./dist/index.mjs"]
+CMD ["node", "--enable-source-maps", "-e", "import('./dist/index.mjs')"]
