@@ -22,7 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", router);
 
 // Serve the built React frontend
-const frontendDist = path.resolve(__dirname, "..", "..", "pawsmart-dist");
+// __dirname = /app/dist, so pawsmart-dist is at /app/pawsmart-dist
+const frontendDist = path.resolve(__dirname, "..", "pawsmart-dist");
 app.use(express.static(frontendDist));
 app.get("*", (_req, res) => {
   res.sendFile(path.join(frontendDist, "index.html"));
