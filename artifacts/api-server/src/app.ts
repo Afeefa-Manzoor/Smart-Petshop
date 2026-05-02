@@ -25,7 +25,7 @@ app.use("/api", router);
 // __dirname = /app/dist, so pawsmart-dist is at /app/pawsmart-dist
 const frontendDist = path.resolve(__dirname, "..", "pawsmart-dist");
 app.use(express.static(frontendDist));
-app.get("*", (_req, res) => {
+app.get("/{*path}", (_req, res) => {
   res.sendFile(path.join(frontendDist, "index.html"));
 });
 
